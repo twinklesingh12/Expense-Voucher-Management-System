@@ -4,3 +4,8 @@ node_modules/
 dist/
 backend/uploads/signatures/*
 !backend/uploads/signatures/.gitkeep
+node_modules/
+.env
+backend/.env
+frontend/.env
+dist/
