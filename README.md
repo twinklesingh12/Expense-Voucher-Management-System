@@ -1,350 +1,275 @@
 # VoucherFlow — Expense Voucher Management System
 
-## 1. Project Overview
+A role-based expense voucher management application built to simplify voucher creation, submission, review, and approval.
 
-VoucherFlow is a role-based expense voucher management application built with React, Node.js, Express, and MySQL.
+## 📌 Overview
 
-The application supports the creation, submission, review, approval, and rejection of expense vouchers through three user roles: Employee, Director, and Accounts.
+VoucherFlow provides a centralized workspace for employees to manage expense vouchers and for authorized users to review and process them through a structured approval workflow.
 
-## 2. Technology Stack
+The application supports three roles:
 
-- **Frontend:** React, Vite, JavaScript, CSS
-- **Backend:** Node.js, Express.js
-- **Database:** MySQL
-- **Authentication:** JSON Web Tokens (JWT)
-- **Password Security:** bcrypt
-- **File Uploads:** Multer
-- **API Style:** REST
+- **Employee:** Creates, saves, edits, and submits vouchers and tracks their status.
+- **Director:** Reviews submitted vouchers and approves or rejects them with a reason when required.
+- **Accounts:** Views vouchers, signatures, and approval statuses for accounting purposes.
 
-## 3. User Roles and Permissions
+## ✨ Features
 
-### Employee
-- Register and sign in.
-- Create, save, edit, and delete their own draft vouchers.
-- Upload a signature image.
-- Submit vouchers for approval.
-- View voucher status and rejection reasons.
+- User registration and login
+- Role-based access control
+- Create, edit, save, and delete draft vouchers
+- Submit vouchers for approval
+- Digital signature upload and display
+- Director approval and rejection workflow
+- Rejection reasons for employees to review
+- Voucher status tracking
+- Accounts read-only access
+- MySQL database integration
+- REST API with JWT-based authentication
 
-### Director
-- View vouchers submitted for approval.
-- Approve pending vouchers with a signature.
-- Reject pending vouchers with a mandatory reason.
-- Review voucher details without editing employee-entered expense information.
+## 🔄 Voucher Workflow
 
-### Accounts
-- View vouchers, signatures, and approval status.
-- Cannot create, edit, delete, approve, or reject vouchers.
+```text
+Draft
+  |
+  v
+Pending Approval
+  |
+  +------> Approved
+  |
+  +------> Rejected
+```
 
-### Voucher Workflow
+- **Draft:** The employee can manage the voucher before submission.
+- **Pending Approval:** The voucher is submitted for the Director's review.
+- **Approved:** The Director approves the voucher.
+- **Rejected:** The Director rejects the voucher and provides a reason.
 
-`Draft → Pending Approval → Approved / Rejected`
+## 🛠️ Technology Stack
 
-## 4. Prerequisites
+| Layer | Technology |
+|---|---|
+| Frontend | React, Vite, JavaScript, CSS |
+| Backend | Node.js, Express.js |
+| Database | MySQL |
+| Authentication | JWT |
+| API style | REST API |
+
+## 📁 Project Structure
+
+The project is organized into frontend and backend applications.
+
+```text
+VoucherFlow/
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── .env.example
+├── backend/
+│   ├── package.json
+│   ├── .env.example
+│   └── schema.sql
+└── README.md
+```
+
+*Note: Adjust this structure to match the actual files and folders in your repository.*
+
+## ⚙️ Prerequisites
 
 Install the following before running the project:
 
-- Node.js 20 or later
-- npm
-- MySQL 8 or a compatible MySQL server
-- MySQL Workbench (recommended)
+- Node.js and npm
+- MySQL Server
 - Git
-- A modern web browser
 
-## 5. Project Setup
+## 🚀 Installation and Setup
 
-### Step 1: Clone the Repository
-
-Replace the placeholder with the actual GitHub repository URL.
+### 1. Clone the repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-cd VoucherFlow
+git clone https://github.com/twinklesingh12/Expense-Voucher-Management-System.git
+cd Expense-Voucher-Management-System
 ```
 
-Alternatively, download the repository ZIP and extract it.
+### 2. Configure the database
 
-### Step 2: Set Up the Database
-
-1. Start the local MySQL server.
-2. Open MySQL Workbench.
-3. Open `backend/schema.sql`.
-4. Execute the SQL script.
-
-The script creates the `voucherflow_db` database and the required `users` and `vouchers` tables for a new installation.
-
-**Important:** `CREATE TABLE IF NOT EXISTS` does not migrate an existing table to a newer structure. Use a proper migration or a clean development database when setting up an older database schema.
-
-### Step 3: Configure the Backend
-
-Open a terminal in the project root:
-
-```powershell
-cd backend
-npm install
-Copy-Item .env.example .env
-```
-
-Edit `backend/.env` and configure your local MySQL credentials.
+1. Start your MySQL server.
+2. Create the project database.
+3. Run the SQL schema file provided in the repository.
+4. Confirm that the required tables have been created.
 
 Example:
+
+```sql
+CREATE DATABASE voucherflow_db;
+```
+
+If your schema file already creates the database, follow the instructions in that file instead.
+
+### 3. Configure the backend
+
+Open a terminal in the backend directory:
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file using `.env.example` as a reference.
+
+Example configuration:
 
 ```env
 PORT=5000
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
-DB_PASSWORD=your_local_mysql_password
+DB_PASSWORD=your_mysql_password
 DB_NAME=voucherflow_db
-JWT_SECRET=replace_with_a_long_random_secret
+JWT_SECRET=your_secure_random_secret
 CLIENT_URL=http://localhost:5173
 ```
 
-Replace the example password and JWT secret with your own values. Do not commit `.env` to GitHub.
+Replace the example values with your local configuration. Use the actual environment variable names expected by your backend.
 
-### Step 4: Create User Accounts
+Start the backend:
 
-Start the backend account creation utility:
-
-```powershell
-npm run create-user
-```
-
-Follow the prompts to create an account. The utility supports the `employee`, `director`, and `accounts` roles. Use a unique password of at least 12 characters.
-
-Public registration is intended for Employee accounts only. Create Director and Accounts accounts through the local account creation utility.
-
-### Step 5: Start the Backend
-
-From the `backend` directory:
-
-```powershell
+```bash
 npm run dev
 ```
 
-The API should run at:
+The backend is expected to run at `http://localhost:5000` when configured with the example port.
 
-`http://localhost:5000`
+### 4. Configure the frontend
 
-Check database connectivity at:
+Open a second terminal:
 
-`http://localhost:5000/api/health`
-
-A healthy response is:
-
-```json
-{
-  "api": "ok",
-  "database": "connected"
-}
-```
-
-### Step 6: Configure and Start the Frontend
-
-Open a second terminal from the project root:
-
-```powershell
+```bash
 cd frontend
 npm install
-Copy-Item .env.example .env
+```
+
+Create a frontend `.env` file if required by your application. For example:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+Use the variable name and API URL expected by your existing frontend code.
+
+Start the frontend:
+
+```bash
 npm run dev
 ```
 
-Open the local URL printed by Vite, usually:
+Open the local URL displayed by Vite, usually `http://localhost:5173`.
 
-`http://localhost:5173`
+## 🔐 User Roles and Permissions
 
-The frontend API URL can be configured in `frontend/.env`:
+| Feature | Employee | Director | Accounts |
+|---|:---:|:---:|:---:|
+| Create vouchers | Yes | No | No |
+| Edit own drafts | Yes | No | No |
+| Submit vouchers | Yes | No | No |
+| View vouchers | Own vouchers | All vouchers | All vouchers |
+| Approve vouchers | No | Yes | No |
+| Reject vouchers | No | Yes | No |
+| View rejection reasons | Yes | Yes | Yes |
+| View signatures | As permitted | Yes | Yes |
 
-```env
-VITE_API_URL=http://localhost:5000/api
+Permissions shown here describe the intended application workflow. Confirm that the implemented backend enforces each permission before submission.
+
+## 📡 API Documentation
+
+The following endpoints describe the API structure discussed during development. Verify the routes, request fields, and response formats against the actual backend before relying on this table.
+
+All protected endpoints should use the authentication token in the request header:
+
+```http
+Authorization: Bearer <JWT_TOKEN>
 ```
 
-Restart Vite after changing environment variables.
-
-## 6. Database Schema
-
-### users
-
-Stores application users and their authentication and role information.
-
-| Column | Purpose |
-|---|---|
-| `id` | Primary key |
-| `full_name` | User's full name |
-| `email` | Unique login email |
-| `password_hash` | Hashed password |
-| `role` | Employee, Director, or Accounts |
-| `department` | User's department |
-| `created_at` | Account creation timestamp |
-
-### vouchers
-
-Stores expense voucher information and its approval lifecycle.
-
-| Column | Purpose |
-|---|---|
-| `id` | Primary key |
-| `voucher_number` | Unique voucher identifier |
-| `employee_id` | Employee foreign key referencing `users.id` |
-| `expense_date` | Date of expense |
-| `department` | Expense department |
-| `expense_title` | Expense title |
-| `category` | Expense category |
-| `description` | Expense description |
-| `amount` | Expense amount |
-| `employee_signature` | Employee signature file reference |
-| `status` | Draft, Pending Approval, Approved, or Rejected |
-| `director_signature` | Director signature file reference |
-| `approval_date` | Approval timestamp |
-| `rejection_reason` | Reason for rejection |
-| `created_at` | Creation timestamp |
-| `updated_at` | Last update timestamp |
-
-### Relationships and Constraints
-
-- Each voucher belongs to an employee through `employee_id`.
-- User emails and voucher numbers must be unique.
-- Voucher status is restricted to the supported workflow values.
-- Voucher amounts must be positive.
-- Indexes support voucher status and employee lookups.
-
-The schema file is `backend/schema.sql`.
-
-## 7. API Documentation
-
-Base URL:
-
-`http://localhost:5000/api`
-
-Protected endpoints require a valid JWT access token:
-
-`Authorization: Bearer <JWT_TOKEN>`
-
-### Authentication Endpoints
+### Authentication
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| POST | `/auth/register` | Register an Employee account |
-| POST | `/auth/login` | Authenticate and receive a JWT |
-| GET | `/auth/me` | Retrieve the authenticated user's information |
+| POST | `/auth/register` | Register a user |
+| POST | `/auth/login` | Authenticate a user |
+| GET | `/auth/me` | Retrieve the current user's information |
 
-Example registration request:
-
-```json
-{
-  "fullName": "Aarav Sharma",
-  "email": "aarav.employee@example.com",
-  "password": "ExamplePassword@2026",
-  "department": "Finance"
-}
-```
-
-Public registration assigns the Employee role on the server.
-
-### Voucher Endpoints
+### Vouchers
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| GET | `/vouchers/summary` | Retrieve voucher status totals |
-| GET | `/vouchers` | List vouchers permitted for the current role |
-| GET | `/vouchers/:id` | Retrieve an individual voucher |
-| POST | `/vouchers` | Create a draft or submit a voucher |
-| PUT | `/vouchers/:id` | Update an employee's own draft |
-| DELETE | `/vouchers/:id` | Delete an employee's own draft |
-| POST | `/vouchers/:id/submit` | Submit a signed draft |
-| POST | `/vouchers/:id/decision` | Approve or reject a pending voucher |
+| GET | `/vouchers` | Retrieve vouchers available to the current user |
+| GET | `/vouchers/summary` | Retrieve voucher summary information |
+| GET | `/vouchers/:id` | Retrieve a voucher by ID |
+| POST | `/vouchers` | Create a voucher |
+| PUT | `/vouchers/:id` | Update an eligible voucher |
+| DELETE | `/vouchers/:id` | Delete an eligible draft |
+| POST | `/vouchers/:id/submit` | Submit a voucher for approval |
+| POST | `/vouchers/:id/decision` | Record an approval or rejection decision |
 
-Signature upload and voucher decision requests use multipart form data where applicable.
+Access to each endpoint depends on the user's role and the voucher's current status.
 
-### Decision Request
+## 🗄️ Database
 
-The Director decision endpoint accepts an action of `approve` or `reject`.
+The application uses MySQL to store user and voucher information.
 
-- Approval requires a director signature file.
-- Rejection requires a non-empty rejection reason.
-- Only pending vouchers can receive a decision.
+The primary tables discussed during development are:
 
-The backend validates the role and voucher status before applying the decision.
+- **users:** Stores user account details, login information, and roles.
+- **vouchers:** Stores voucher details, employee information, amounts, signatures, and workflow status.
 
-### Typical Responses
+Refer to the project's SQL schema file for the actual columns, data types, keys, and relationships.
 
-- `200 OK` — Request completed.
-- `201 Created` — Resource created.
-- `400 Bad Request` — Invalid input or workflow operation.
-- `401 Unauthorized` — Missing or invalid authentication.
-- `403 Forbidden` — Role is not permitted to perform the operation.
-- `404 Not Found` — Requested resource not found.
-- `409 Conflict` — Duplicate record or conflicting input.
-- `500 Internal Server Error` — Unexpected server-side error.
+## 🔒 Security and Configuration
 
-Exact response codes depend on the endpoint and error condition.
+- Keep database credentials and JWT secrets in environment variables.
+- Never commit `.env` files containing real credentials.
+- Include `.env.example` files with placeholder values only.
+- Enforce role permissions on the backend, not only in the frontend.
+- Validate submitted voucher data and approval decisions.
+- Restrict edits and deletions according to the voucher workflow.
+- Do not commit real employee signatures or confidential business information.
 
-## 8. Assumptions Made During Development
+## 🧪 Testing Checklist
 
-1. Each user has one assigned role: Employee, Director, or Accounts.
-2. Public registration is restricted to Employee accounts.
-3. Director and Accounts accounts are created by an authorized local administrator using the account creation utility.
-4. Employees can edit and delete only their own draft vouchers.
-5. A submitted voucher cannot be edited by the Employee.
-6. A Director can approve or reject only a pending voucher.
-7. Approval requires a Director signature, and rejection requires a reason.
-8. Accounts is a read-only business role.
-9. Signature uploads are limited to supported image formats and the configured file-size limit.
-10. The application is intended for local development and evaluation unless additional production security controls are implemented.
+Before submitting the project, verify the following:
 
-## 9. Security Considerations
+- [ ] Users can register and log in.
+- [ ] Employees can create and save draft vouchers.
+- [ ] Employees can submit vouchers for approval.
+- [ ] Submitted vouchers appear in the Director's workspace.
+- [ ] The Director can approve or reject eligible vouchers.
+- [ ] Rejection reasons are recorded and visible to the employee.
+- [ ] Accounts users can view vouchers without modifying them.
+- [ ] Unauthorized users cannot perform restricted actions.
+- [ ] Data persists correctly in MySQL.
+- [ ] The application runs using the documented setup instructions.
 
-- Passwords are hashed before storage.
-- JWT authentication protects private API routes.
-- Role-based authorization restricts sensitive operations.
-- Input validation is applied to authentication and voucher operations.
-- Environment files and secrets must not be committed to version control.
-- Use test data rather than real employee or financial information in a public repository.
-- Before production deployment, review file access, upload validation, rate limiting, audit logging, HTTPS, secret management, and authorization at the API level.
+## 🚧 Assumptions and Limitations
 
-## 10. Testing Checklist
+- Users have role-specific permissions.
+- Vouchers follow the documented workflow.
+- Only authorized users can perform approval decisions.
+- The database schema and API behavior are defined by the implementation included in the repository.
 
-- [ ] Employee registration and login
-- [ ] Draft creation, editing, and deletion
-- [ ] Signature upload
-- [ ] Submission for approval
-- [ ] Director approval with signature
-- [ ] Director rejection with mandatory reason
-- [ ] Accounts read-only access
-- [ ] Access restrictions for unauthenticated users
-- [ ] Role restrictions verified through direct API requests
-- [ ] Database and API health checks
+Document any additional assumptions or incomplete features before submission.
 
-Record only tests that have actually passed.
+## 👨‍💻 Development
 
-## 11. Repository Structure
+Run the frontend and backend in separate terminals during local development.
 
-```text
-VoucherFlow/
-├── backend/
-│   ├── middleware/
-│   ├── routes/
-│   ├── uploads/signatures/
-│   ├── create-user.js
-│   ├── db.js
-│   ├── schema.sql
-│   ├── server.js
-│   └── .env.example
-├── frontend/
-│   ├── src/
-│   ├── index.html
-│   ├── vite.config.js
-│   └── .env.example
-├── .gitignore
-└── README.md
-```
+If a dependency or configuration error occurs, check the terminal output, environment variables, database connection, and API URL.
 
-## 12. Author and Submission
+## 📄 License and Confidentiality
 
-This project was developed as an internship evaluation project.
+Add a license only if you have permission to distribute the project under that license.
 
-Repository: `<YOUR_GITHUB_REPOSITORY_URL>`
+If this project was developed for an assessment or company assignment, follow the applicable confidentiality and submission requirements.
 
-Before submission, verify the setup instructions on a clean local database, include the schema and environment templates, and remove secrets, temporary files, and unnecessary test data.
-#   E x p e n s e - V o u c h e r - M a n a g e m e n t - S y s t e m  
- 
+---
+
+**VoucherFlow** — A structured workflow for expense voucher management.
