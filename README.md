@@ -1,21 +1,5 @@
 # 💼 VoucherFlow — Expense Voucher Management System
 
-\<p align="center">
-&#x20; \<strong>A Role-Based Expense Voucher Management Application\</strong>
-&#x20; \<br />
-&#x20; Built with React, Node.js, Express.js and MySQL
-\</p>
-
-\<p align="center">
-&#x20; \<img src="[https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=white](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react\&logoColor=white)" alt="React" />
-&#x20; \<img src="[https://img.shields.io/badge/Node.js-Backend-339933?logo=nodedotjs&logoColor=white](https://img.shields.io/badge/Node.js-Backend-339933?logo=nodedotjs\&logoColor=white)" alt="Node.js" />
-&#x20; \<img src="[https://img.shields.io/badge/Express.js-API-000000?logo=express&logoColor=white](https://img.shields.io/badge/Express.js-API-000000?logo=express\&logoColor=white)" alt="Express.js" />
-&#x20; \<img src="[https://img.shields.io/badge/MySQL-Database-4479A1?logo=mysql&logoColor=white](https://img.shields.io/badge/MySQL-Database-4479A1?logo=mysql\&logoColor=white)" alt="MySQL" />
-&#x20; \<img src="[https://img.shields.io/badge/Status-Development-orange](https://img.shields.io/badge/Status-Development-orange)" alt="Development status" />
-\</p>
-
----
-
 ## 📌 Overview
 
 **VoucherFlow** is a role-based expense voucher management system designed to simplify the creation, submission, review, and approval of expense vouchers.
@@ -334,10 +318,3 @@ This project was developed as part of the Full Stack Developer Internship evalua
 
 The implementation focuses on structured voucher management, role-based access, secure authentication, and a controlled approval workflow.
 
----
-
-\<p align="center">
-&#x20; \<strong>💼 VoucherFlow — Simplifying Expense Voucher Management\</strong>
-&#x20; \<br />
-&#x20; \<sub>Built with React, Node.js, Express.js and MySQL.\</sub>
-\</p>
