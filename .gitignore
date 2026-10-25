@@ -1,0 +1,6 @@
+node_modules/
+.env
+**/.env
+dist/
+backend/uploads/signatures/*
+!backend/uploads/signatures/.gitkeep

@@ -1,0 +1,17 @@
+VoucherFlow quick start (Windows PowerShell)
+
+1. Open MySQL Workbench and execute backend/schema.sql.
+2. In backend, copy .env.example to .env and set your local MySQL password and a private JWT_SECRET.
+3. Terminal 1 (backend):
+   cd <your-project-folder>\backend
+   npm install
+   npm run create-user
+   npm run dev
+   Register an Employee from the login screen. To test Director and Accounts roles, run `npm run create-user` and select the required role. Use your own email and a unique password (at least 12 characters). There are no demo accounts.
+4. Terminal 2 (frontend):
+   cd <your-project-folder>\frontend
+   npm install
+   npm run dev
+5. Open the Vite URL (usually http://localhost:5173).
+
+If this project is extracted to a different folder, use that folder's actual path in the terminal.
